@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const page = () => {
   const [task, settask] = useState("")
@@ -25,6 +25,17 @@ const page = () => {
     );
     setmainTask(updatedTasks);
   };
+
+  useEffect(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    if (savedTasks) {
+      setmainTask(JSON.parse(savedTasks));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(mainTask));
+  }, [mainTask]);
 
   let renderTask = <h2 className='text-center'>No task available</h2>
 
